@@ -1,5 +1,9 @@
 import Bgdark from "../images/bg-desktop-dark.jpg";
 import Bglight from "../images/bg-desktop-light.jpg";
+
+import Sun from "../images/icon-sun.svg"
+import Moon from "../images/icon-moon.svg"
+
 import { useState } from "react";
 
 interface Todo {
@@ -37,7 +41,7 @@ export default function Main() {
           } as React.CSSProperties
         }
         id="whole"
-        className={`h-full ${mode ? "bg-[#FAFAFA] before:bg-[image:var(--bg-image2)]" : "bg-[#171823] before:bg-[image:var(--bg-image)]"} flex justify-center pb-[50px] before:content-['']  before:absolute before:top-0 before:h-70 before:w-full before:bg-cover before:bg-center`}
+        className={`h-[110vh] overflow-none ${mode ? "bg-[#FAFAFA] before:bg-[image:var(--bg-image2)]" : "bg-[#171823] before:bg-[image:var(--bg-image)]"} flex justify-center pb-[50px] before:content-['']  before:absolute before:top-0 before:h-70 before:w-full before:bg-cover before:bg-center`}
       >
         <div id="container" className="w-[540px] mt-[10vh] relative z-1">
           <div id="top" className="flex justify-between items-center mb-[30px]">
@@ -50,7 +54,7 @@ export default function Main() {
             >
               <img
                 src={
-                  mode ? "src/images/icon-moon.svg" : "src/images/icon-sun.svg"
+                  mode ? Sun : Moon
                 }
                 alt=""
               />
