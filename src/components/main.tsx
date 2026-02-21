@@ -1,10 +1,10 @@
 import Bgdark from "../images/bg-desktop-dark.jpg";
 import Bglight from "../images/bg-desktop-light.jpg";
 
-import Sun from "../images/icon-sun.svg"
-import Moon from "../images/icon-moon.svg"
+import Sun from "../images/icon-sun.svg";
+import Moon from "../images/icon-moon.svg";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface Todo {
   id: number;
@@ -14,7 +14,7 @@ interface Todo {
 
 export default function Main() {
   const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, text: "Complete online JavaScript course", checked: false },
+    { id: 1, text: "Complete online JavaScript course", checked: true },
     { id: 2, text: "Jog around the park 3x", checked: false },
     { id: 3, text: "10 minutes meditation", checked: false },
     { id: 4, text: "Read for 1 hour", checked: false },
@@ -31,6 +31,23 @@ export default function Main() {
     );
   };
 
+  const [value, setValue] = useState("");
+
+  const Addtodo = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (value.trim() === "") return;
+
+    const newTodo: Todo = {
+      id: Date.now(),
+      text: value,
+      checked: false,
+    };
+
+    setTodos((prev) => [...prev, newTodo]);
+    setValue("");
+  };
+
   return (
     <>
       <div
@@ -41,7 +58,7 @@ export default function Main() {
           } as React.CSSProperties
         }
         id="whole"
-        className={`h-[110vh] overflow-none ${mode ? "bg-[#FAFAFA] before:bg-[image:var(--bg-image2)]" : "bg-[#171823] before:bg-[image:var(--bg-image)]"} flex justify-center pb-[50px] before:content-['']  before:absolute before:top-0 before:h-70 before:w-full before:bg-cover before:bg-center`}
+        className={`h-auto overflow-none ${mode ? "bg-[#FAFAFA] before:bg-[image:var(--bg-image2)]" : "bg-[#171823] before:bg-[image:var(--bg-image)]"} flex justify-center pb-[50px] before:content-['']  before:absolute before:top-0 before:h-70 before:w-full before:bg-cover before:bg-center`}
       >
         <div id="container" className="w-[540px] mt-[10vh] relative z-1">
           <div id="top" className="flex justify-between items-center mb-[30px]">
@@ -52,28 +69,27 @@ export default function Main() {
               className="cursor-pointer h-[26px] w-[26px]"
               onClick={() => setMode((v) => !v)}
             >
-              <img
-                src={
-                  mode ? Sun : Moon
-                }
-                alt=""
-              />
+              <img src={mode ? Sun : Moon} alt="" />
             </button>
           </div>
 
           <div
             id="new"
-            className={`h-[64px] ${mode ? "bg-white shadow-md shadow-[#C2C3D680]" : "bg-[#25273D] shadow-md shadow-[#00000080]"} gap-[10px] flex pl-6 items-center rounded-[5px] mb-[30px]`}
+            className={`h-[64px] ${mode ? "bg-white shadow-md shadow-[#C2C3D680]" : "bg-[#25273D] shadow-md shadow-[#00000080]"} gap-[10px] flex pl-6 pr-6 items-center rounded-[5px] mb-[30px]`}
           >
             <label className="custom-check">
               <input type="checkbox" />
               <span className="box"></span>
             </label>
-            <input
-              type="text"
-              placeholder="Create a new todo..."
-              className={`" ${mode ? "placeholder-[#9495A5]" : "placeholder-[#767992]"}   font-400 text-[18px] text-white tracking-[-0.25px] outline-none"`}
-            />
+            <form className="w-full" onSubmit={Addtodo}>
+              <input
+                type="text"
+                placeholder="Create a new todo..."
+                className={`${mode ? "placeholder-[#9495A5]" : "placeholder-[#767992]"} w-full font-400 text-[18px] text-white tracking-[-0.25px] outline-none`}
+                onChange={(e) => setValue(e.target.value)}
+                value={value}
+              />
+            </form>
           </div>
 
           <div
